@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import CustomBtn from "../CustomBtn/CustomButton";
-import { Task } from "@/app/page";
+import CustomBtn from "../CustomBtn";
+import { Task } from "@/types";
 import { Trash2, Timer } from "lucide-react";
 import clsx from "clsx";
 import { Clock, XCircle, CheckCircle } from "lucide-react";

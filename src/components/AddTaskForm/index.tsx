@@ -1,8 +1,8 @@
 `use client`;
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import CustomTextField from "../CustomTextField/CustomTextField";
-import CustomBtn from "../CustomBtn/CustomButton";
+import CustomTextField from "../CustomTextField";
+import CustomBtn from "../CustomBtn";
 import { PlusCircle } from "lucide-react";
 
 interface AddTaskFormProps {

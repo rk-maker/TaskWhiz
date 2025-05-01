@@ -1,18 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, number } from "framer-motion";
-import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
-import TaskCard from "./components/TaskCard/TaskCard";
+import AddTaskForm from "@/components/AddTaskForm";
+import TaskCard from "@/components/TaskCard";
 import { title } from "process";
+import { Task } from "@/types";
 import { useDragControls } from "framer-motion";
 
-export type Task = {
-  id: string;
-  title: string;
-  description: string;
-  status: 0 | 1 | 2 | 3;
-  createdAt: Date;
-};
 export default function Home() {
   const controls = useDragControls();
   const [tasks, setTasks] = useState<Task[]>([]);
