@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, number } from "framer-motion";
 import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
 import TaskCard from "./components/TaskCard/TaskCard";
 import { title } from "process";
+import { useDragControls } from "framer-motion";
+
 export type Task = {
   id: string;
   title: string;
@@ -12,9 +14,11 @@ export type Task = {
   createdAt: Date;
 };
 export default function Home() {
+  const controls = useDragControls();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeTab, setActiveTab] = useState(0);
   const [tabWidth, setTabWidth] = useState(0);
+  const [isDragging, setIsDragging] = useState<string | null>(null);
   const tabRef = useRef<HTMLDivElement | null>(null);
   const tabs = [
     { id: 0, title: "Active" },
@@ -108,14 +112,28 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredTasks.map((task, index) => (
                 <motion.div
+                  drag
+                  dragControls={controls}
+                  dragSnapToOrigin
                   key={task.id}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{
+                    opacity: isDragging === task.id ? 0.5 : 1,
+                    y: 0,
+                    scale: isDragging === task.id ? 0.5 : 1,
+                  }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{
                     duration: 0.3,
                     delay: index * 0.1,
                     ease: "easeOut",
+                  }}
+                  onDragStart={(e, info) => {
+                    setIsDragging(task.id);
+                  }}
+                  onDragEnd={(e, info) => {
+                    console.log("Drag end");
+                    setIsDragging(null);
                   }}
                 >
                   <TaskCard
